@@ -1,29 +1,30 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-## appeler le répetroire du projet 
+# répertoire racine du projet
 BASE_DIR = Path(__file__).resolve().parent.parent
+
 
 class Settings(BaseSettings):
     """
     configuration globale de l'application.
-    centraliser tous les paramètres liés à l'infrastructure.
+    centraliser tous les paramètres liés à l'infra.
     """
 
     # Env
-    ENV: str = "local"  # local | prod
+    ENV: str = "local"
 
     # GCP
     PROJECT_ID: str = "symphonics-iot-subpub-project"
 
-    # BIG QUERY
+    # BigQuery
     BIGQUERY_DATASET: str = "iot_dataset"
     BIGQUERY_TABLE: str = "device_metrics"
 
-    # sqlite (mode local) pour tester
-     SQLITE_DB_PATH: str = str(BASE_DIR / "iot_energy.db")
+    # SQLite (mode local)
+    SQLITE_DB_PATH: str = str(BASE_DIR / "iot_energy.db")
 
-    # pub/sub
+    # Pub/Sub
     PUBSUB_TOPIC: str = "send_command"
 
     model_config = SettingsConfigDict(env_file=".env")
