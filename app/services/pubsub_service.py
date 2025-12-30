@@ -8,14 +8,14 @@ class PubSubService:
    enlocal, je simule l'envoi pub/sub.
     """
 
-    def publish_command(self, device_id: str, switch: bool) -> None:
+    def publish_cmd(self, device_id: str, switch: bool) -> None:
         message = {
             "devId": device_id,
             "switch": switch
         }
 
         if settings.ENV == "local":
-            # Simulation locale
+            # simulation locale
             print(f"[PUBSUB - LOCAL] Topic={settings.PUBSUB_TOPIC} | Message={json.dumps(message)}")
             return
 
