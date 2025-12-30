@@ -9,10 +9,11 @@ pubsub_service = PubSubService()
 
 @router.post("/send")
 def send_cmd(command: SendCommand):
+    print("SEND ENDPOINT CALLED", command)
     """
     envoie une commande on/off à un device.
     """
-    pubsub_service.publish_command(
+    pubsub_service.publish_cmd(
         device_id=command.device_id,
         switch=command.switch
     )

@@ -8,6 +8,5 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Enregistrement des routes
 app.include_router(message_router)
 app.include_router(send_router)
