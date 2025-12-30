@@ -14,14 +14,14 @@ ALLOWED_CODES = {"instant_power", "temp_interior"}
 @router.post("/message")
 def receive_device_message(message: DeviceMessage):
     """
-    Réception des messages envoyés par les appareils connectés.
-    Seules les propriétés ayant changé sont persistées.
+    Réception messages envoyés par les devices connectés.
+    seules les proprties ayant changé sont captés.
     """
 
     if message.bizCode != "devicePropertyMessage":
         raise HTTPException(
             status_code=400,
-            detail="Type de message non supporté"
+            detail="type message non supporté"
         )
 
     rows_to_insert = []
