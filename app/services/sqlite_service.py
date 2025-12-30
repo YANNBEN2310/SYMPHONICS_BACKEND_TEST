@@ -55,3 +55,38 @@ class SQLiteService:
 
         connection.commit()
         connection.close()
+
+
+    def get_power_report(self) -> dict:
+        """
+        Retrun un rapport agrégé de la consommation électrique
+        par jour et par créneau horaire.
+        """
+        connection = sqlite3.connect(self.db_path)
+        cursor = connection.cursor()
+
+        cursor.execute(
+            """
+            SELECT
+                date(time / 1000, 'unixepoch') AS day,
+                strftime('%H:00', time / 1000, 'unixepoch') AS hour,
+                SUM(value) AS total_power
+            FROM device_metrics
+            WHERE code = 'instant_power'
+            GROUP BY day, hour
+            ORDER BY day, hour;
+            """
+        )
+
+        rows = cursor.fetchall()
+        connection.close()
+
+        report = {}
+
+        for day, hour, total_power in rows:
+            if day not in report:
+                report[day] = {}
+
+            report[day][hour] = int(total_power)
+
+        return report
