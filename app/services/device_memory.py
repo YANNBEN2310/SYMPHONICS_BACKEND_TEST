@@ -33,3 +33,4 @@ class DeviceStateMemory:
             return True
 
         return False
+

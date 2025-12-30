@@ -1,6 +1,6 @@
 import sqlite3
 from typing import List, Dict
-from backend.configs.config import settings
+from app.configs.config import settings
 
 
 class SQLiteService:

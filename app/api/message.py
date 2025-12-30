@@ -1,12 +1,13 @@
 from fastapi import APIRouter, HTTPException
-from backend.models.models import DeviceMessage
-from backend.services.sqlite_service import SQLiteService
-from backend.services.device_memory import DeviceStateCache
+from app.models.models import DeviceMessage
+from app.services.sqlite_service import SQLiteService
+from app.services.device_memory import DeviceStateMemory
+
 
 router = APIRouter()
 
 sqlite_service = SQLiteService()
-device_cache = DeviceStateCache()
+device_cache = DeviceStateMemory()
 
 ALLOWED_CODES = {"instant_power", "temp_interior"}
 
