@@ -21,7 +21,7 @@ class Settings(BaseSettings):
     BIGQUERY_TABLE: str = "device_metrics"
 
     # sqlite (mode local) pour tester
-    SQLITE_DB_PATH: str = "iot_energy.db"
+     SQLITE_DB_PATH: str = str(BASE_DIR / "iot_energy.db")
 
     # pub/sub
     PUBSUB_TOPIC: str = "send_command"
