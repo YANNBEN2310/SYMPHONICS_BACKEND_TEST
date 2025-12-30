@@ -7,7 +7,7 @@ sqlite_service = SQLiteService()
 
 
 @router.get("/report/power")
-def get_report():
+def get_power_report():
     """
     return un rapport agrégé des consommations électriques
     par jour et par créneau horaire.
