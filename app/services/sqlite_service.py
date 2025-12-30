@@ -91,34 +91,34 @@ class SQLiteService:
 
         return report
 
-def get_temperature_report(self) -> dict:
-    """
-    return un rapport agrégé de la température moyenne
-    par jour et par créneau horaire.
-    """
-    connection = sqlite3.connect(self.db_path)
-    cursor = connection.cursor()
-
-    cursor.execute(
+    def get_temperature_report(self) -> dict:
         """
-        SELECT
-            date(time / 1000, 'unixepoch') AS day,
-            strftime('%H:00', time / 1000, 'unixepoch') AS hour,
-            AVG(value) AS avg_temp
-        FROM device_metrics
-        WHERE code = 'temp_interior'
-        GROUP BY day, hour
-        ORDER BY day, hour;
+        return un rapport agrégé de la température moyenne
+        par jour et par créneau horaire.
         """
-    )
+        connection = sqlite3.connect(self.db_path)
+        cursor = connection.cursor()
 
-    rows = cursor.fetchall()
-    connection.close()
+        cursor.execute(
+            """
+            SELECT
+                date(time / 1000, 'unixepoch') AS day,
+                strftime('%H:00', time / 1000, 'unixepoch') AS hour,
+                AVG(value) AS avg_temp
+            FROM device_metrics
+            WHERE code = 'temp_interior'
+            GROUP BY day, hour
+            ORDER BY day, hour;
+            """
+        )
 
-    report = {}
+        rows = cursor.fetchall()
+        connection.close()
 
-    for day, hour, avg_temp in rows:
-        report.setdefault(day, {})
-        report[day][hour] = round(avg_temp, 2)
+        report = {}
 
-    return report
+        for day, hour, avg_temp in rows:
+            report.setdefault(day, {})
+            report[day][hour] = round(avg_temp, 2)
+
+        return report
