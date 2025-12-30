@@ -28,7 +28,7 @@ app/configs/__pycache__/
 app/models/__pycache__/
 app/services/__pycache__/
 
-
 iot_energy.db
 
-
+.env
+*.json
