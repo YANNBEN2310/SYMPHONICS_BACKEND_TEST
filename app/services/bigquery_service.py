@@ -56,3 +56,32 @@ class BigQueryService:
             report[day][hour] = int(row.total_power)
 
         return report
+
+def get_temperature_report(self) -> dict:
+    """
+    Retrun un rapport agrégé de la température moyenne
+    par jour et par heure depuis BigQuery.
+    """
+    query = f"""
+    SELECT
+        DATE(TIMESTAMP_MILLIS(time)) AS day,
+        FORMAT_TIMESTAMP('%H:00', TIMESTAMP_MILLIS(time)) AS hour,
+        AVG(value) AS avg_temp
+    FROM `{self.table_id}`
+    WHERE code = 'temp_interior'
+    GROUP BY day, hour
+    ORDER BY day, hour
+    """
+
+    result = self.client.query(query).result()
+
+    report = {}
+
+    for row in result:
+        day = str(row.day)
+        hour = row.hour
+
+        report.setdefault(day, {})
+        report[day][hour] = round(row.avg_temp, 2)
+
+    return report

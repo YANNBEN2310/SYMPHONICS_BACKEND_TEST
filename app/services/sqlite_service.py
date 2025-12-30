@@ -90,3 +90,35 @@ class SQLiteService:
             report[day][hour] = int(total_power)
 
         return report
+
+def get_temperature_report(self) -> dict:
+    """
+    return un rapport agrégé de la température moyenne
+    par jour et par créneau horaire.
+    """
+    connection = sqlite3.connect(self.db_path)
+    cursor = connection.cursor()
+
+    cursor.execute(
+        """
+        SELECT
+            date(time / 1000, 'unixepoch') AS day,
+            strftime('%H:00', time / 1000, 'unixepoch') AS hour,
+            AVG(value) AS avg_temp
+        FROM device_metrics
+        WHERE code = 'temp_interior'
+        GROUP BY day, hour
+        ORDER BY day, hour;
+        """
+    )
+
+    rows = cursor.fetchall()
+    connection.close()
+
+    report = {}
+
+    for day, hour, avg_temp in rows:
+        report.setdefault(day, {})
+        report[day][hour] = round(avg_temp, 2)
+
+    return report

@@ -276,3 +276,4 @@ Les appels à BigQuery et Pub/Sub peuvent être mockés pour permettre des tests
 
 * Les services Google Cloud sont supposés configurés.
 
+## MERCI
