@@ -104,7 +104,7 @@ SYMPHONICS_BACKEND_TEST/
 
 ## Description des endpoints
 
-### 5.1 POST `/message`
+### POST `/message`
 
 reçoit les messages envoyés par les appareils IoT et stocke les données pertinentes.
 
@@ -146,7 +146,7 @@ reçoit les messages envoyés par les appareils IoT et stocke les données perti
 
 ---
 
-### 5.2 POST `/send`
+### POST `/send`
 
 
 envoie un ordre d’allumage ou d’extinction à un appareil.
@@ -175,7 +175,7 @@ envoie un ordre d’allumage ou d’extinction à un appareil.
 
 ---
 
-### 5.3 GET `/report`
+###  GET `/report`
 
 retourne un rapport agrégé de la consommation électrique par jour et par tranche horaire.
 
