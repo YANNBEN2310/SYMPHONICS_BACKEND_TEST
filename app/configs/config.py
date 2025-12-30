@@ -1,14 +1,13 @@
 from pathlib import Path
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-# répertoire racine du projet
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 class Settings(BaseSettings):
     """
     configuration globale de l'application.
-    centraliser tous les paramètres liés à l'infra.
+    centralise tous les paramètres liés à l'infra.
     """
 
     # Env
@@ -27,7 +26,11 @@ class Settings(BaseSettings):
     # Pub/Sub
     PUBSUB_TOPIC: str = "send_command"
 
-    model_config = SettingsConfigDict(env_file=".env")
+    # 
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        extra="ignore"  # <-- ignorer GOOGLE_APPLICATION_CREDENTIALS
+    )
 
 
 settings = Settings()
